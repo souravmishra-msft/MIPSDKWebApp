@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Security Policy (Edit)";
+}
+
+@model MIPSDK_WebApp1.Models.PolicyViewModel
+
+<h1 class="mb-4">Edit Data Policy</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h4>DataPolicy</h4>
+    </div>
+    <div class="card-body">
+         <form asp-action="Edit">
+            <div class="form-group mb-3">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" readonly />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="PolicyName" class="control-label"></label>
+                <input asp-for="PolicyName" class="form-control" readonly />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="SelectedLabelId" class="control-label">Label Name</label>
+                <select asp-for="SelectedLabelId" class="form-control" asp-items="@(new SelectList(Model.Labels, "Id", "Name"))">
+                    <option value="">-- Select Label --</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <button type="submit" class="btn btn-primary" id="editPolicy">Save</button>
+                <a class="btn btn-secondary text-white" id="back" asp-area="" asp-controller="SecurityPolicy" asp-action="Index">Back</a>
+            </div>
+         </form>
+    </div>
+</div>
+

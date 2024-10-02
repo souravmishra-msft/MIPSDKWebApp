@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Employees";
+}
+
+@model MIPSDK_WebApp1.Models.AddEmployeeViewModel
+
+<div class="container">
+    <div class="row">
+        <h1 class="mt-5">Employees</h1>
+
+        <div class="alert alert-info">
+            <p>
+                <label>Label for Downloaded Files:</label>
+                @foreach (var label in Model.Policies)
+                {
+                    <span class="badge bg-primary">@label.LabelName</span>
+                }
+            </p>
+        </div>
+
+        <table class="table table-striped table-bordered table-hover table-fixed">
+            <thead class="table-dark">
+                <tr>
+                    @* <th class="text-nowrap">Id</th> *@
+                    <th class="text-nowrap">EmpId</th>
+                    <th class="text-nowrap">First Name</th>
+                    <th class="text-nowrap">Last Name</th>
+                    <th class="text-nowrap">Title</th>
+                    <th class="text-nowrap">Date of Birth</th>
+                    <th class="text-nowrap">Hire Date</th>
+                    <th class="text-nowrap">Salary</th>
+                    <th class="text-nowrap">PAN</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.Employees == null || !((List<MIPSDK_WebApp1.Models.Entities.Employee>)ViewBag.Employees).Any())
+                {
+                    <tr>
+                        <td colspan="9" class="text-center">No Data available</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var employee in (List<MIPSDK_WebApp1.Models.Entities.Employee>)ViewBag.Employees)
+                    {
+                        <tr>
+                            @* <td>@employee.Id</td> *@
+                            <td>@employee.EmpId</td>
+                            <td>@employee.FirstName</td>
+                            <td>@employee.LastName</td>
+                            <td>@employee.Title</td>
+                            <td>@employee.Dob.ToString("dd-MM-yyyy")</td>
+                            <td>@employee.HireDate.ToString("dd-MM-yyyy")</td>
+                            <td>$@employee.Salary</td>
+                            <td>@employee.PAN</td>
+                            <td>
+                                <div class="d-flex justify-content-evenly">
+                                    <a class="btn btn-info mx-1 text-white" asp-controller="employees" asp-action="UserDetails" asp-route-id="@employee.Id">Details</a>
+                                    <a class="btn btn-primary mx-1" asp-controller="employees" asp-action="Edit" asp-route-id="@employee.Id">Edit</a>
+                                    <form asp-controller="employees" asp-action="Delete" asp-route-id="@employee.Id" method="post" class="mx-1">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="mb-3">
+            <a class="btn btn-warning text-white" asp-controller="Employees" asp-action="Add">Add Employee</a>
+            <a class="btn btn-secondary" asp-controller="Employees" asp-action="ExportToFile">Export</a>
+        </div>
+    </div>
+</div>

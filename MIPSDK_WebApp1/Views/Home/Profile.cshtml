@@ -1,0 +1,58 @@
+﻿@using Microsoft.Graph.Models
+@{
+    ViewData["Title"] = "User Profile fetched from MS Graph";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2>User's Profile</h2>
+        </div>
+        <div class="card-body">
+            @{
+                var user = ViewData["UserProfile"] as User;
+                if (user != null)
+                {
+                    if (ViewData["ProfileImage"] != null)
+                    {
+                        <img class="rounded-circle mb-3 mx-auto d-block" style="width: 150px; height: 150px;" src="data:image/jpeg;base64,@ViewData["ProfileImage"]" alt="Profile Picture" />
+                    }
+                    else
+                    {
+                        <p class="text-center">No Pic available for this user. Upload a pic for this user in the Azure portal</p>
+                    }
+                    <h4 class="mt-4 text-center">@user.DisplayName</h4>
+
+                    <table class="table table-striped mt-3">
+                        <tbody>
+                            <tr>
+                                <th scope="row">ID</th>
+                                <td>@user.Id</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Display Name</th>
+                                <td>@user.DisplayName</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email</th>
+                                <td>@user.Mail</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">User Principal Name</th>
+                                <td>@user.UserPrincipalName</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No user profile data available.</p>
+                }
+            }
+        </div>
+        <div class="card-footer text-center">
+            <a class="btn btn-primary text-white" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+        </div>
+    </div>
+</div>
